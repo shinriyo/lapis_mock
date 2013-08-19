@@ -1,4 +1,6 @@
 local lapis = require("lapis")
+local console = require("lapis.console")
+local db = require("lapis.db")
 return lapis.serve((function()
   do
     local _parent_0 = lapis.Application
@@ -11,7 +13,12 @@ return lapis.serve((function()
             href = self:url_for("login")
           }, "Log in")
         end)
-      end
+      end,
+      ["/list"] = function(self)
+        local res = db.query("SELECT * FROM users")
+        return "ok!"
+      end,
+      ["/console"] = console.make()
     }
     _base_0.__index = _base_0
     setmetatable(_base_0, _parent_0.__base)
